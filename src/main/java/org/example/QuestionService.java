@@ -1,7 +1,10 @@
 package org.example;
 
+import java.util.Scanner;
+
 public class QuestionService {
     Question[] questions = new Question[5];
+    int[] selectedAnswers = new int[5];
 
     public QuestionService() {
         questions[0] = new Question(1, "Which move can hit a Pokémon using Fly?", new String[]{"Thunder", "Earthquake", "Hyper Beam", "Solar Beam"}, 0);
@@ -11,10 +14,32 @@ public class QuestionService {
         questions[4] = new Question(5, "Which ability prevents a Pokémon from falling asleep?", new String[]{"Levitate", "Insomnia", "Sturdy", "Overgrow"}, 1);
     }
 
-    public void displayQuestions() {
+    public void playQuiz() {
+        int i = 0;
         for (Question q: questions) {
-            System.out.println(q);
+            System.out.println("ENTER CORRECT OPTION NUMBER");
+            System.out.println("Question number: " + q.getId());
+            System.out.println(q.getQuestion());
+            String[] options = q.getOptions();
+            int j = 0;
+            for (String option: options) {
+                System.out.println(++j + ". " + option);
+            }
+            Scanner sc = new Scanner(System.in);
+            selectedAnswers[i++] = sc.nextInt();
+        }
+        for (int s: selectedAnswers) {
+            System.out.println(s);
         }
     }
 
+    public void getScore() {
+        int score = 0;
+        for (int i = 0; i < questions.length; i++) {
+            if (questions[i].getAnswer() == selectedAnswers[i] - 1) {
+                score++;
+            }
+        }
+        System.out.println("Your score is: " + score);
+    }
 }
